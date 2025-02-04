@@ -1,29 +1,36 @@
 import { test as base } from "@playwright/test";
-import { HomePage } from "../pages/home.page";
-import { CartPage } from "../pages/cart.page";
-import { AuthorizationPage } from "../pages/authorization.page";
+import { LoginPage } from "../pages/login.page";
+import { SignUpPage } from "../pages/signup.page";
+import { ContactsPage } from "../pages/contacts.page"
+import { AddContactPage } from "../pages/add.contact.page"
 
 interface MyFixtures {
-    homePage: HomePage;
-    cartPage: CartPage;
-    authorizationPage: AuthorizationPage;
+    loginPage: LoginPage;
+    signUpPage: SignUpPage;
+    contactsPage: ContactsPage;
+    addContactPage: AddContactPage;
 };
 
 export const test = base.extend< MyFixtures >({
     
-    homePage: async ({ page }, use) => {
-        const homePage = new HomePage(page);
-        await use(homePage);
+    loginPage: async ({ page }, use) => {
+        const loginPage = new LoginPage(page);
+        await use(loginPage);
     },
 
-    cartPage: async ({ page }, use) => {
-        const cartPage = new CartPage(page);
-        await use(cartPage);
+    signUpPage: async ({ page }, use) => {
+        const signUpPage = new SignUpPage(page);
+        await use(signUpPage);
     },
 
-    authorizationPage: async ({ page }, use) => {
-        const authorizationPage = new AuthorizationPage(page);
-        await use(authorizationPage);
+    contactsPage: async ({ page }, use) => {
+        const contactsPage = new ContactsPage(page);
+        await use(contactsPage);
+    },
+
+    addContactPage: async ({ page }, use) => {
+        const addContactPage = new AddContactPage(page);
+        await use(addContactPage);
     },
 
 });

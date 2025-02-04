@@ -1,8 +1,5 @@
 import { Locator, Page } from "@playwright/test";
-import { SignUpPage } from "./signup.page";
 import { BasePage } from "./base.page";
-
-
 
 export class ContactsPage extends BasePage {
     public pagePath = '/contactList'
@@ -28,9 +25,57 @@ export class ContactsPage extends BasePage {
         this.addressRow = page.getByRole('columnheader', { name: "Address"})
         this.cityAndZipCodeRow = page.getByRole('columnheader', { name: "City, State/Province, Postal Code"})
         this.countryRow = page.getByRole('columnheader', { name: "Country"})
-        this.addNewContactButton
+        this.addNewContactButton = page.getByRole('button', { name: "Add a New Contact"})
         this.logoutButton = page.getByRole('button', { name: "Logout"})
-        this.headerText
-
+        this.headerText = page.getByRole('heading', { name: "ContactList"});
     }
+
+    async headerTextIsVisible(){
+        await this.isElementVisible(this.headerText);
+    }
+
+    async logoutButtonIsVisible(){
+        await this.isElementVisible(this.logoutButton);
+    }
+
+    async addNewContactButtonIsVisible(){
+        await this.isElementVisible(this.addNewContactButton);
+    }
+
+    async nameRowIsVisible(){
+        await this.isElementVisible(this.nameRow)
+    }
+
+    async birthdayRowIsVisible(){
+        await this.isElementVisible(this.birthdayRow)
+    }
+
+    async emailRowIsVisible(){
+        await this.isElementVisible(this.emailRow)
+    }
+
+    async phoneRowIsVisible(){
+        await this.isElementVisible(this.phoneRow)
+    }
+
+    async addressRowIsVisible(){
+        await this.isElementVisible(this.addressRow)
+    }
+
+    async cityRowIsVisible(){
+        await this.isElementVisible(this.cityAndZipCodeRow)
+    }
+
+    async countryRowIsVisible(){
+        await this.isElementVisible(this.countryRow)
+    }
+
+    async clickAddNewContactButton(){
+        await this.addNewContactButton.click()
+    }
+
+    async clickLogOutButton(){
+        await this.logoutButton.click()
+    }
+
 }
