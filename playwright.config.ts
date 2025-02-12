@@ -1,11 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
-import dotenv from 'dotenv';
-
-dotenv.config();
-
-if (!process.env.BASE_URL || !process.env.BASE_URL_API) {
-  throw new Error('Environment variables BASE_URL or BASE_URL_API are not set');
-}
+import dotenv from 'dotenv'; dotenv.config();
 
 export default defineConfig({
   testDir: './tests',
@@ -29,7 +23,7 @@ export default defineConfig({
     ]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    baseURL: process.env.BASE_URL,
+    baseURL: `${process.env.BASE_URL}`,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'retain-on-failure',

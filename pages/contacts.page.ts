@@ -2,8 +2,9 @@ import { Locator, Page } from "@playwright/test";
 import { BasePage } from "./base.page";
 
 export class ContactsPage extends BasePage {
-    public pagePath = '/contactList'
-
+    public pagePath = `contactList`
+    
+    readonly allPageElements: Locator[];
     private readonly nameRow: Locator;
     private readonly birthdayRow: Locator;
     private readonly emailRow: Locator;
@@ -28,47 +29,19 @@ export class ContactsPage extends BasePage {
         this.addNewContactButton = page.getByRole('button', { name: "Add a New Contact"})
         this.logoutButton = page.getByRole('button', { name: "Logout"})
         this.headerText = page.getByRole('heading', { name: "ContactList"});
-    }
-
-    async headerTextIsVisible(){
-        await this.isElementVisible(this.headerText);
-    }
-
-    async logoutButtonIsVisible(){
-        await this.isElementVisible(this.logoutButton);
-    }
-
-    async addNewContactButtonIsVisible(){
-        await this.isElementVisible(this.addNewContactButton);
-    }
-
-    async nameRowIsVisible(){
-        await this.isElementVisible(this.nameRow)
-    }
-
-    async birthdayRowIsVisible(){
-        await this.isElementVisible(this.birthdayRow)
-    }
-
-    async emailRowIsVisible(){
-        await this.isElementVisible(this.emailRow)
-    }
-
-    async phoneRowIsVisible(){
-        await this.isElementVisible(this.phoneRow)
-    }
-
-    async addressRowIsVisible(){
-        await this.isElementVisible(this.addressRow)
-    }
-
-    async cityRowIsVisible(){
-        await this.isElementVisible(this.cityAndZipCodeRow)
-    }
-
-    async countryRowIsVisible(){
-        await this.isElementVisible(this.countryRow)
-    }
+        this.allPageElements = [
+            this.nameRow,
+            this.birthdayRow,
+            this.emailRow,
+            this.phoneRow,
+            this.addressRow,
+            this.cityAndZipCodeRow,
+            this.countryRow,
+            this.addNewContactButton,
+            this.logoutButton,
+            this.headerText
+        ]
+    };
 
     async clickAddNewContactButton(){
         await this.addNewContactButton.click()

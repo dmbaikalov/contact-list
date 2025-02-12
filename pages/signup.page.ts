@@ -1,9 +1,11 @@
 import { Page, Locator, expect } from "@playwright/test";
-import { signUpData as credentials } from "../utils/test.utils";
+import { signUpData } from "../utils/test.utils";
 import { BasePage } from "./base.page";
 
 export class SignUpPage extends BasePage{
-    public pagePath = '/addUser'
+    public pagePath = `addUser`
+
+    readonly allPageElements: Locator[];
     readonly signUpHeaderText: Locator;
     readonly firstNameField: Locator;
     readonly lastNameField: Locator;
@@ -14,42 +16,42 @@ export class SignUpPage extends BasePage{
 
     constructor(page: Page){
         super(page);
+        this.signUpHeaderText = page.getByRole('heading', { name: "Add User"})
+        this.firstNameField = page.getByRole('textbox', { name: "First Name"})
+        this.lastNameField = page.getByRole('textbox', { name: "Last Name"})
+        this.signUpEmailField = page.getByRole('textbox', { name: "Email"})
+        this.signUpPasswordField = page.getByRole('textbox', { name: "Password"})
+        this.signUpSubmitButton = page.getByRole('button', { name: "Submit"})
+        this.signUpCancelButton = page.getByRole('button', { name: "Cancel"})
+        this.allPageElements = [
+            this.signUpHeaderText,
+            this.firstNameField,
+            this.lastNameField,
+            this.signUpEmailField,
+            this.signUpPasswordField,
+            this.signUpSubmitButton,
+            this.signUpCancelButton
+        ];
 
-    }
-
-    async signUpEmailFieldIsVisible(){
-        await this.isElementVisible(this.signUpEmailField);
-    }
-    
-    async signUpPasswordFieldIsVisible(){
-        await this.isElementVisible(this.signUpPasswordField);
-    }
-    
-    async submitButtonIsVisible(){
-        await this.isElementVisible(this.signUpSubmitButton);
-    }
-    
-    async signUpHeaderTextIsVisible(){
-        await this.isElementVisible(this.signUpHeaderText);
-    }
+    };
     
     async typeFirstName(){
-        await this.firstNameField.fill(credentials.firstName);
+        await this.firstNameField.fill(signUpData.firstName);
     }
     
     async typeLastName(){
-        await this.lastNameField.fill(credentials.lastName);
+        await this.lastNameField.fill(signUpData.lastName);
     }
 
     async typeEmail(){
-        await this.signUpEmailField.fill(credentials.email);
+        await this.signUpEmailField.fill(signUpData.email);
     }
 
     async typePassword(){
-        await this.signUpPasswordField.fill(credentials.password);
+        await this.signUpPasswordField.fill(signUpData.password);
     }
     
-    async clickSubmitSignUpButton(){
+    async clickSignUpButton(){
         await this.signUpSubmitButton.click();
     }
 

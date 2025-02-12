@@ -1,17 +1,19 @@
-import { chromium, PlaywrightTestConfig } from "@playwright/test";
+import { PlaywrightTestConfig } from "@playwright/test";
+import dotenv from 'dotenv'; dotenv.config();
 
 const config: PlaywrightTestConfig = {
     timeout: 60000,
-    retries: 1,
+    retries: process.env.CI ? 2 : 0,
     testDir: './tests',
+    
     use: {
-        baseURL: `https://thinking-tester-contact-list.herokuapp.com/`,
+        baseURL: `${process.env.BASE_URL}`,
         headless: true,
         viewport: { width: 1920, height: 1080 },
         actionTimeout: 10000,
         ignoreHTTPSErrors: true,
-        trace: 'retain-on-failure',
-        screenshot: 'on-first-failure',
+        trace: 'on',
+        screenshot: 'on',
         
     },
     reporter:[
@@ -25,7 +27,7 @@ const config: PlaywrightTestConfig = {
         ]],
     projects: [
     {
-        name: 'chrome',
+        name: 'chromium',
         use: { browserName: 'chromium' },
     },
     {

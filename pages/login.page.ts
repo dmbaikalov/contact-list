@@ -3,15 +3,16 @@ import { BasePage } from "./base.page";
 import { userLoginData as credentials } from "../utils/test.utils";
 
 export class LoginPage extends BasePage {
-    public pagePath = '/';
-    private readonly headerText: Locator;
-    private readonly loginEmailField: Locator;
-    private readonly loginPasswordField: Locator;
-    private readonly loginSubmitButton: Locator;
-    private readonly loginToSignupButton: Locator;
-    private readonly footerLogo: Locator;
-    private readonly linkToApiDocumentation: Locator;
-
+    public pagePath = `login`;
+    readonly allPageElements: Locator[];
+    readonly headerText: Locator;
+    readonly loginEmailField: Locator;
+    readonly loginPasswordField: Locator;
+    readonly loginSubmitButton: Locator;
+    readonly signUpButton: Locator;
+    readonly footerLogo: Locator;
+    readonly linkToApiDocumentation: Locator;
+    
 
 
     constructor(page: Page){
@@ -21,52 +22,32 @@ export class LoginPage extends BasePage {
         this.loginEmailField = page.getByRole('textbox', { name: "Email"})
         this.loginPasswordField = page.getByRole('textbox', { name: "Password" })
         this.loginSubmitButton = page.getByRole('button', { name: "Submit"})
-        this.loginToSignupButton = page.getByRole('button', { name: "Sign up"})
-        this.footerLogo = page.getByRole('paragraph').locator('img')
+        this.signUpButton = page.getByRole('button', { name: "Sign up"})
+        this.footerLogo = page.getByRole('paragraph').locator('img');
+        this.allPageElements = [
+            this.headerText,
+            this.linkToApiDocumentation,
+            this.loginEmailField,
+            this.loginPasswordField,
+            this.loginSubmitButton,
+            this.signUpButton,
+            this.footerLogo
+            ]
     }
 
-
-async userloginEmailFieldIsVisible(){
-    await this.isElementVisible(this.loginEmailField);
-}
-
-async userloginPasswordFieldIsVisible(){
-    await this.isElementVisible(this.loginPasswordField);
-}
-
-async loginSubmitButtonIsVisible(){
-    await this.isElementVisible(this.loginSubmitButton);
-}
-
-async loginToSignupButtonIsVisible(){
-    await this.isElementVisible(this.loginToSignupButton);
-}
-
-async headerTextIsVisible(){
-    await this.isElementVisible(this.headerText)
-}
-
-async footerLogoIsVisible(){
-    await this.isElementVisible(this.footerLogo)
-}
-
-async linkToApiDocumentationIsVisible(){
-    await this.isElementVisible(this.linkToApiDocumentation)
-}
-
-async typeEmailInloginEmailField(){
+async typeUserEmail(){
     await this.loginEmailField.fill(credentials.email);
 }
 
-async typePasswordInloginPasswordField(){
+async typeUserPassword(){
     await this.loginPasswordField.fill(credentials.password);
 }
 
-async clickloginSubmitButton(){
+async clickSubmitButton(){
     await this.loginSubmitButton.click();
 }
 
-async clickloginToSignupButton(){
-    await this.loginToSignupButton.click();
+async clickSignupButton(){
+    await this.signUpButton.click();
 }
 };
