@@ -1,0 +1,63 @@
+name: Playwright Tests
+
+on: [push]
+
+jobs:
+  ui-chrome-tests:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run UI-tests via docker-compose
+        run: |
+          BASE_URL=${{ secrets.BASE_URL }} docker compose run regression-chrome /bin/sh -c "ls -la && npm ci && npx playwright install && npx playwright test --config=ui.config.ts --project=chrome --output=allure-results --shard=1/3"
+
+  ui-firefox-tests:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run UI-tests via docker-compose
+        run: |
+          BASE_URL=${{ secrets.BASE_URL }} docker compose run regression-firefox /bin/sh -c "ls -la && npm ci && npx playwright install && npx playwright test --config=ui.config.ts --project=firefox --output=allure-results --shard=2/3"
+
+  ui-webkit-tests:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run UI-tests via docker-compose
+        run: |
+          BASE_URL=${{ secrets.BASE_URL }} docker compose run regression-webkit /bin/sh -c "ls -la && npm ci && npx playwright install && npx playwright test --config=ui.config.ts --project=webkit --output=allure-results --shard=3/3"
+
+  create-allure-report:
+    runs-on: ubuntu-22.04
+    needs: [ui-firefox-tests, ui-chrome-tests, ui-webkit-tests]
+    steps:
+      - name: Create Allure report
+        uses: simple-elf/allure-report-action@master
+        with:
+          allure_results: allure-results
+          gh_pages: gh-pages
+          allure_report: allure-report
+          allure_history: allure-history
+
+  deploy-to-gh-pages:
+    runs-on: ubuntu-22.04
+    needs: create-allure-report
+    steps:
+      - name: Download Allure history
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-history
+          path: allure-history
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        env:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-history

@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  regression-chrome:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - BASE_URL=${BASE_URL}
+    volumes:
+      - ./:/app
+      - ./package.json:/app/package.json
+    working_dir: /app
+
+  regression-firefox:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - BASE_URL=${BASE_URL}
+    volumes:
+      - ./:/app
+      - ./package.json:/app/package.json
+    working_dir: /app
+
+  regression-webkit:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - BASE_URL=${BASE_URL}
+    volumes:
+      - ./:/app
+      - ./package.json:/app/package.json
+    working_dir: /app
