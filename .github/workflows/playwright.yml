@@ -23,14 +23,8 @@ jobs:
       - name: Install browsers
         run: npx playwright install
 
-      - name: Chrome tests
-        run: npx playwright test --config=ui.config.ts --project=chromium --output=allure-results --shard=${{ matrix.shard}}/3
-
-      - name: Firefox tests
-        run: npx playwright test --config=ui.config.ts --project=firefox --output=allure-results --shard=${{ matrix.shard}}/3
-
-      - name: Webkit tests
-        run: npx playwright test --config=ui.config.ts --project=webkit --output=allure-results --shard=${{ matrix.shard}}/3
+      - name: Run tests
+        run: npx playwright test --config=ui.config.ts --output=allure-results --shard=${{ matrix.shard}}/3
 
   upload_allure_results:
     runs-on: ubuntu-latests
