@@ -4,6 +4,7 @@ on: [push]
 
 env:
   BASE_URL: ${{ secrets.BASE_URL }}
+  HOME: /root
 
 jobs:
   ui-tests:
