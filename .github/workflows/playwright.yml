@@ -4,63 +4,119 @@ on: [push]
 
 jobs:
   ui-chrome-tests:
+    name: UI Tests - Chrome
     runs-on: ubuntu-22.04
+    container: mcr.microsoft.com/playwright:v1.50.0-noble
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run UI-tests via docker-compose
+      - name: Install dependencies
         run: |
-          BASE_URL=${{ secrets.BASE_URL }} docker compose run regression-chrome /bin/sh -c "ls -la && npm ci && npx playwright install && npx playwright test --config=ui.config.ts --project=chromium --output=allure-results --shard=1/3"
+          npm ci && npx playwright install
+
+      - name: Run tests (Chrome)
+        run: |
+          npx playwright test --config=ui.config.ts --project=chromium --output=allure-results --shard=1/3
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
+
+      - name: Upload shards
+        uses: actions/upload-artifact@v4
+        with:
+          name: blob-report
+          path: blob-report/
 
   ui-firefox-tests:
+    name: UI Tests - Firefox
     runs-on: ubuntu-22.04
+    container: mcr.microsoft.com/playwright:v1.50.0-noble
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run UI-tests via docker-compose
+      - name: Install dependencies
         run: |
-          BASE_URL=${{ secrets.BASE_URL }} docker compose run regression-firefox /bin/sh -c "ls -la && npm ci && npx playwright install && npx playwright test --config=ui.config.ts --project=firefox --output=allure-results --shard=2/3"
+          npm ci && npx playwright install
+
+      - name: Run tests (Firefox)
+        run: |
+          npx playwright test --config=ui.config.ts --project=firefox --output=allure-results --shard=2/3
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
+
+      - name: Upload test artifacts (blob-report)
+        uses: actions/upload-artifact@v4
+        with:
+          name: blob-report
+          path: blob-report/
 
   ui-webkit-tests:
+    name: UI Tests - Webkit
     runs-on: ubuntu-22.04
+    container: mcr.microsoft.com/playwright:v1.50.0-noble
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run UI-tests via docker-compose
+      - name: Install dependencies
         run: |
-          BASE_URL=${{ secrets.BASE_URL }} docker compose run regression-webkit /bin/sh -c "ls -la && npm ci && npx playwright install && npx playwright test --config=ui.config.ts --project=webkit --output=allure-results --shard=3/3"
+          npm ci
+          npx playwright install
 
-  create-allure-report:
-    runs-on: ubuntu-22.04
-    needs: [ui-firefox-tests, ui-chrome-tests, ui-webkit-tests]
-    steps:
-      - name: Collecting shards
+      - name: Run Playwright Tests (WebKit)
         run: |
-          npm ci && allure generate allure-results --clean -o allure-report
-      - name: Create Allure report
-        uses: simple-elf/allure-report-action@master
+          npx playwright test --config=ui.config.ts --project=webkit --output=allure-results --shard=3/3
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
+
+      - name: Upload test artifacts (blob-report)
+        uses: actions/upload-artifact@v4
         with:
-          allure_results: allure-results
-          gh_pages: gh-pages
-          allure_report: allure-report
-          allure_history: allure-history
+          name: blob-report
+          path: blob-report/
 
-  deploy-to-gh-pages:
+  allure-test-report:
+    name: Generate Allure Report
     runs-on: ubuntu-22.04
-    needs: create-allure-report
+    needs: [ui-chrome-tests, ui-firefox-tests, ui-webkit-tests]
+    container: pradapjackie/allure-reports-generation:1.0
     steps:
-      - name: Download Allure history
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download Allure results
         uses: actions/download-artifact@v4
         with:
-          name: allure-history
-          path: allure-history
+          name: allure-results
+          path: allure-results/
+
+      - name: Generate Allure Report
+        run: allure generate allure-results --clean -o allure-report
+
+      - name: Upload Allure Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report/
+
+  deploy-on-pages:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-22.04
+    needs: allure-test-report
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download Allure report
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-report
+          path: public/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
-        env:
+        with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: allure-history
+          publish_dir: public
