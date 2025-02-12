@@ -27,17 +27,7 @@ jobs:
       - name: Run Chromium tests
         env:
           BASE_URL: ${{ secrets.BASE_URL}}
-        run: npx playwright test --config=ui.config.ts --project=chromium --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
-
-      - name: Run FireFox tests
-        env:
-          BASE_URL: ${{ secrets.BASE_URL}}
-        run: npx playwright test --config=ui.config.ts --project=firefox --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
-
-      - name: Run Webkit tests
-        env:
-          BASE_URL: ${{ secrets.BASE_URL}}
-        run: npx playwright test --config=ui.config.ts --project=webkit --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+        run: npx playwright test --config=ui.config.ts --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
 
       - name: Upload blob report to GitHub Actions Artifacts
         if: ${{ !cancelled()}}
