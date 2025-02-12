@@ -31,7 +31,7 @@ jobs:
         run: npx playwright test --config=ui.config.ts --project=webkit
 
       - name: Generate report
-        run: allure generate allure-results --clean -o allure-report
+        run: allure serve allure-results
 
       - uses: actions/upload-artifact@v4
         if: always()
