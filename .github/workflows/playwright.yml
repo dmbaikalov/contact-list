@@ -12,6 +12,7 @@ jobs:
         shard: [1, 2, 3]
     env:
       BASE_URL: ${{ secrets.BASE_URL }}
+      HOME: /root
 
     steps:
       - name: Repo checkout
@@ -23,8 +24,14 @@ jobs:
       - name: Install browsers
         run: npx playwright install
 
-      - name: Run tests
+      - name: Chrome tests
         run: npx playwright test --config=ui.config.ts --output=allure-results --shard=${{ matrix.shard}}/3
+
+      - name: Firefox tests
+        run: npx playwright test --config=ui.config.ts --project=firefox --output=allure-results --shard=${{ matrix.shard}}/3
+
+      - name: Webkit tests
+        run: npx playwright test --config=ui.config.ts --project=webkit --output=allure-results --shard=${{ matrix.shard}}/3
 
   upload_allure_results:
     runs-on: ubuntu-latests
