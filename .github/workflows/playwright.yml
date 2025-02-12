@@ -30,16 +30,6 @@ jobs:
       - name: ui-webkit-tests
         run: npx playwright test --config=ui.config.ts --project=webkit
 
-      - name: Generate report
-        run: allure serve allure-results
-
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 30
-
       - name: Building report
         uses: simple-elf/allure-report-action@master
         if: always()
