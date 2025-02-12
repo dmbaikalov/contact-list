@@ -39,7 +39,7 @@ jobs:
     steps:
       - name: Collecting shards
         run: |
-          allure generate allure-results --clean -o allure-report
+          npm ci && allure generate allure-results --clean -o allure-report
       - name: Create Allure report
         uses: simple-elf/allure-report-action@master
         with:
