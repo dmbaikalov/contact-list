@@ -2,15 +2,15 @@ name: Playwright Tests
 
 on: [push]
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  BASE_URL: ${{ secrets.BASE_URL }}
+  HOME: /root
+
 jobs:
   ui-tests:
     runs-on: ubuntu-latest
     container: mcr.microsoft.com/playwright:v1.50.1-noble
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      BASE_URL: ${{ secrets.BASE_URL }}
-      HOME: /root
-
     steps:
       - name: Repo checkout
         uses: actions/checkout@v4
@@ -86,5 +86,5 @@ jobs:
         if: always()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
+          publish_dir: ./allure-history
           publish_branch: gh-pages
