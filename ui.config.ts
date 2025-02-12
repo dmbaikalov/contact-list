@@ -17,14 +17,17 @@ const config: PlaywrightTestConfig = {
         
     },
     reporter:[
-        [
-            'allure-playwright', 
+        process.env.CI ? 
+        ['blob'] 
+        : 
+        ['allure-playwright', 
             {
                 detail: true,
-                outputFolder: 'allure-results',
                 suiteTitle: true,
-            }
-        ]],
+                open: "never",
+                outputFolder: 'playwright-results',
+            }]
+        ],
     projects: [
     {
         name: 'chromium',
