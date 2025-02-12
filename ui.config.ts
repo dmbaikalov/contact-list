@@ -23,7 +23,6 @@ const config: PlaywrightTestConfig = {
                 detail: true,
                 suiteTitle: true,
                 open: "never",
-                outputFolder: 'playwright-results',
             }] 
         : 
         ['blob']
