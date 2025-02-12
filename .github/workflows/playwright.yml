@@ -5,7 +5,7 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: mcr.microsoft.com/playwright:v1.50.0-noble
+    container: mcr.microsoft.com/playwright:v1.50.1-noble
     strategy:
       fail-fast: false
       matrix:
@@ -25,13 +25,15 @@ jobs:
 
   ui-chrome-tests:
     runs-on: ubuntu-latest
-    container: mcr.microsoft.com/playwright:v1.50.0-noble
     needs: [build]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run UI-tests via docker-compose
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Chrome tests
         run: npx playwright test --config=ui.config.ts --project=chrome --output=allure-results --shard=${{ matrix.shard}}/3
 
   ui-firefox-tests:
