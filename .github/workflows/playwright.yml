@@ -10,6 +10,8 @@ jobs:
       fail-fast: false
       matrix:
         shard: [1, 2, 3]
+    env:
+      BASE_URL: ${{ secrets.BASE_URL }}
 
     steps:
       - name: Repo checkout
