@@ -7,34 +7,34 @@ env:
 
 jobs:
   ui-chromium-tests:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Run Chromium via docker-compose
         run: |
-          docker compose run regression-chromium /bin/sh -c "ls -la && npm ci && npx playwright install && npx playwright test --config=ui.config.ts --project=chromium"
+          docker compose run regression-chromium /bin/sh -c "ls -la && npm ci && npx playwright install && npx playwright test --config=ui.config.ts --project=chromium --output=allure-results "
 
   ui-firefox-tests:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Run Firefox tests via docker-compose
         run: |
-          docker compose run regression-firefox /bin/sh -c "ls -la && npm ci && npx playwright install && npx playwright test --config=ui.config.ts --project=firefox"
+          docker compose run regression-firefox /bin/sh -c "ls -la && npm ci && npx playwright install && npx playwright test --config=ui.config.ts --project=firefox --output=allure-results "
 
   ui-webkit-tests:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Run Webkit tests via docker-compose
         run: |
-          docker compose run regression-webkit /bin/sh -c "ls -la && npm ci && npx playwright install && npx playwright test --config=ui.config.ts --project=webkit"
+          docker compose run regression-webkit /bin/sh -c "ls -la && npm ci && npx playwright install && npx playwright test --config=ui.config.ts --project=webkit --output=allure-results "
 
   build-and-deploy-test-report:
     runs-on: ubuntu-latest
