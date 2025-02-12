@@ -37,6 +37,9 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [ui-firefox-tests, ui-chrome-tests, ui-webkit-tests]
     steps:
+      - name: Collecting shards
+        run: |
+          allure generate allure-results --clean -o allure-report
       - name: Create Allure report
         uses: simple-elf/allure-report-action@master
         with:
