@@ -6,10 +6,6 @@ jobs:
   ui-tests:
     runs-on: ubuntu-latest
     container: mcr.microsoft.com/playwright:v1.50.1-noble
-    strategy:
-      fail-fast: false
-      matrix:
-        shard: [1, 2, 3]
     env:
       github_token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
       BASE_URL: ${{ secrets.BASE_URL }}
@@ -32,13 +28,13 @@ jobs:
         run: npx playwright install
 
       - name: Chromium tests
-        run: npx playwright test --config=ui.config.ts --project=chromium --output=allure-results --shard=${{ matrix.shard}}/3
+        run: npx playwright test --config=ui.config.ts --project=chromium --output=allure-results --shard=1/3
 
       - name: Firefox tests
-        run: npx playwright test --config=ui.config.ts --project=firefox --output=allure-results --shard=${{ matrix.shard}}/3
+        run: npx playwright test --config=ui.config.ts --project=firefox --output=allure-results --shard=2/3
 
       - name: Webkit tests
-        run: npx playwright test --config=ui.config.ts --project=webkit --output=allure-results --shard=${{ matrix.shard}}/3
+        run: npx playwright test --config=ui.config.ts --project=webkit --output=allure-results --shard=3/3
 
       - name: upload_allure_results
         if: always()
