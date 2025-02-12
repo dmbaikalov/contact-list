@@ -36,33 +36,9 @@ jobs:
         run: |
           docker compose run regression-webkit /bin/sh -c "ls -la && npm ci && npx playwright install && npx playwright test --config=ui.config.ts --project=webkit --output=allure-results"
 
-  get-allure-history:
-    needs: [ui-chromium-tests, ui-firefox-tests, ui-webkit-tests]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Install deps
-        run: docker compose run regression-webkit /bin/sh -c "ls -la && npm ci && npx playwright install"
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: allure-results
-          path: allure-results
-          retention-days: 20
-
-      - uses: actions/checkout@v4
-        if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
-
   build-and-deploy-test-report:
     runs-on: ubuntu-latest
-    needs:
-      [ui-chromium-tests, ui-firefox-tests, ui-webkit-tests, get-allure-history]
+    needs: [ui-chromium-tests, ui-firefox-tests, ui-webkit-tests]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
