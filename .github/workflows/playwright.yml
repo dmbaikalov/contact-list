@@ -55,6 +55,6 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         if: always()
         env:
-          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          deploy_key: ${{ secrets.DEPLOY_KEY }}
           publish_branch: gh-pages
           publish_dir: allure-history
