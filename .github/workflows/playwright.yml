@@ -13,6 +13,10 @@ jobs:
     env:
       BASE_URL: ${{ secrets.BASE_URL }}
       HOME: /root
+
+  ui-chrome-tests:
+    runs-on: ubuntu-latest
+    needs: [build]
     steps:
       - name: Repo checkout
         uses: actions/checkout@v4
@@ -23,16 +27,6 @@ jobs:
       - name: Install browsers
         run: npx playwright install
 
-  ui-chrome-tests:
-    runs-on: ubuntu-latest
-    needs: [build]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Install dependencies
-        run: npm ci
-
       - name: Chrome tests
         run: npx playwright test --config=ui.config.ts --project=chrome --output=allure-results --shard=${{ matrix.shard}}/3
 
@@ -40,8 +34,14 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     steps:
-      - name: Checkout repository
+      - name: Repo checkout
         uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install browsers
+        run: npx playwright install
 
       - name: Run UI-tests via docker-compose
         run: npx playwright test --config=ui.config.ts --project=firefox --output=allure-results --shard=${{ matrix.shard}}/3
@@ -50,8 +50,14 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     steps:
-      - name: Checkout repository
+      - name: Repo checkout
         uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install browsers
+        run: npx playwright install
 
       - name: Run UI-tests via docker-compose
         run: npx playwright test --config=ui.config.ts --project=webkit --output=allure-results --shard=${{ matrix.shard}}/3
