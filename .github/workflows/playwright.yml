@@ -6,15 +6,24 @@ env:
   BASE_URL: ${{ secrets.BASE_URL }}
 
 jobs:
-  ui-chromium-tests:
+  ui-tests:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
+      - name: Repo check
         uses: actions/checkout@v4
 
-      - name: Run Chromium via docker-compose
+      - name: ui-chromium-tests
         run: |
-          docker compose run regression-chromium /bin/sh -c "ls -la && npm ci && npx playwright install && npx playwright test --config=ui.config.ts --project=chromium --output=allure-results"
+          docker compose run regression-chromium /bin/sh -c "ls -la && npm ci && npx playwright install && npx playwright test --config=ui.config.ts --project=chromium"
+
+      - name: ui-firefox-tests
+        run: |
+          docker compose run regression-firefox /bin/sh -c "ls -la && npm ci && npx playwright install && npx playwright test --config=ui.config.ts --project=firefox"
+
+      - name: ui-webkit-tests
+        run: |
+          docker compose run regression-webkit /bin/sh -c "ls -la && npm ci && npx playwright install && npx playwright test --config=ui.config.ts --project=webkit"
 
       - uses: actions/upload-artifact@v4
         if: always()
@@ -22,47 +31,6 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
-
-  ui-firefox-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Run Firefox tests via docker-compose
-        run: |
-          docker compose run regression-firefox /bin/sh -c "ls -la && npm ci && npx playwright install && npx playwright test --config=ui.config.ts --project=firefox --output=allure-results"
-
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 30
-
-  ui-webkit-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Run Webkit tests via docker-compose
-        run: |
-          docker compose run regression-webkit /bin/sh -c "ls -la && npm ci && npx playwright install && npx playwright test --config=ui.config.ts --project=webkit --output=allure-results"
-
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 30
-
-  build-and-deploy-test-report:
-    runs-on: ubuntu-latest
-    needs: [ui-chromium-tests, ui-firefox-tests, ui-webkit-tests]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
 
       - name: Building report
         uses: simple-elf/allure-report-action@master
