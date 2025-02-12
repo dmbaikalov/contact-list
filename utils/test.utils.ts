@@ -22,7 +22,7 @@ export const userLoginData: { email: string, password: string} = {
   password: signUpData.password
 }
 
-export async function createScreenShotOnFailure(page: Page, testTitle: string) {
+export async function createScreenshotOnFailure(page: Page, testTitle: string) {
   const sanitizedTitle = testTitle.replace(/[^a-zA-Z0-9]/g, '_');
   const screenshotPath = `./screenshots/${sanitizedTitle}.png`;
   await page.screenshot({ path: screenshotPath });
