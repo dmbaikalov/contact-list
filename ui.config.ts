@@ -18,15 +18,15 @@ const config: PlaywrightTestConfig = {
     },
     reporter:[
         process.env.CI ? 
-        ['blob'] 
-        : 
         ['allure-playwright', 
             {
                 detail: true,
                 suiteTitle: true,
                 open: "never",
                 outputFolder: 'playwright-results',
-            }]
+            }] 
+        : 
+        ['blob']
         ],
     projects: [
     {
