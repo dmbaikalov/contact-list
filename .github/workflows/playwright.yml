@@ -39,7 +39,7 @@ jobs:
         run: npm install -g allure-commandline
 
       - name: Running tests on Chromium
-        run: npm run ui:tests:chromium
+        run: npm run tests:ui:chromium
 
       - name: Generate report
         run: allure generate allure-results --clean -o allure-report
@@ -67,7 +67,7 @@ jobs:
         run: npm install -g allure-commandline
 
       - name: Running tests on all browsers
-        run: npm run ui:tests:all
+        run: npm run tests:ui:all
 
       - name: Generate report
         run: allure generate allure-results --clean -o allure-report
