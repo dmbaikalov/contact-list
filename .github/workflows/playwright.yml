@@ -85,6 +85,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Collecting and building test report
         uses: simple-elf/allure-report-action@master
         continue-on-error: true
@@ -102,8 +103,24 @@ jobs:
     steps:
       - name: Set Git safe directory
         run: git config --global --add safe.directory /github/workspace
+
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          repository: dmbaikalov/interview-ui-framework-showcase
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ssh-strict: true
+          ssh-user: git
+          persist-credentials: true
+          clean: true
+          sparse-checkout-cone-mode: true
+          fetch-depth: 1
+          fetch-tags: false
+          show-progress: true
+          lfs: false
+          submodules: false
+          set-safe-directory: true
+
       - name: Deploying report to GitHub pages
         uses: peaceiris/actions-gh-pages@v4
         with:
