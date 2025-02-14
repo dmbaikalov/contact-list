@@ -69,12 +69,14 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          persist-credentials: false
 
       - name: Running tests on Chromium
-        run: docker compose run e2e-ui-tests /bin/sh -c "ls -la && npm run tests:ui:chromium"
+        run: |
+          docker compose run e2e-ui-tests /bin/sh -c 
+          ls -la 
+          npm ci
+          npx playwright install 
+          npm run tests:ui:chromium
 
       - name: Generate report
         run: allure generate allure-results --clean -o allure-report
