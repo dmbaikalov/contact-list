@@ -56,6 +56,8 @@ jobs:
     runs-on: ubuntu-latest
     container: mcr.microsoft.com/playwright:v1.50.0-noble
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: Collecting and building test report
         uses: simple-elf/allure-report-action@master
         continue-on-error: true
@@ -71,6 +73,8 @@ jobs:
     needs: [building-report]
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: Deploying report to GitHub pages
         uses: peaceiris/actions-gh-pages@v4
         with:
