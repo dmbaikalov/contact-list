@@ -9,29 +9,33 @@ test.afterEach(async ({ page }) => {
 
 test.describe.serial('User is able to Sign Up,Login and Logout', async () => {
   
-  test('User is able to Sign Up', async ({ loginPage, signUpPage }) => {
+  test('User is able to Sign Up', async ({ loginPage, signUpPage, contactsPage }) => {
     await loginPage.open()
     await loginPage.clickSignupButton();
     await signUpPage.typeFirstName();
     await signUpPage.typeLastName();
     await signUpPage.typeEmail();
     await signUpPage.typePassword();
-    await signUpPage.clickSignUpButton()
+    await signUpPage.clickSignUpButton();
+    await loginPage.wait(1000);
+    await contactsPage.isOpen();
   });
 
-  test('User is able to Login', async ({ loginPage }) => {
+  test('User is able to Login', async ({ loginPage, contactsPage }) => {
     await loginPage.open();
     await loginPage.isOpen();
     await loginPage.typeUserEmail();
     await loginPage.typeUserPassword();
     await loginPage.clickSubmitButton();
+    await loginPage.wait(1000)
+    await contactsPage.isOpen();
   });
 
   test('User is able to Logout', async ({ loginPage, contactsPage }) => {
     await contactsPage.open()
     await contactsPage.isOpen();
     await contactsPage.clickLogOutButton();
-    await loginPage.wait(1000)
+    await loginPage.wait(1000);
     await loginPage.isOpen(process.env.BASE_URL);
   })
 })
