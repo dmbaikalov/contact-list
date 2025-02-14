@@ -3,7 +3,6 @@ import { BasePage } from "./base.page";
 
 export class ContactsPage extends BasePage {
     public pagePath = `contactList`
-    
     readonly allPageElements: Locator[];
     private readonly nameRow: Locator;
     private readonly birthdayRow: Locator;
@@ -16,20 +15,20 @@ export class ContactsPage extends BasePage {
     private readonly logoutButton: Locator;
     private readonly headerText: Locator;
 
-
     constructor(page: Page){
-        super(page)
-        this.nameRow = page.getByRole('columnheader', { name: "Name"})
-        this.birthdayRow = page.getByRole('columnheader', { name: "Birthday"})
-        this.emailRow = page.getByRole('columnheader', { name: "Email"})
-        this.phoneRow = page.getByRole('columnheader', { name: "Phone"})
-        this.addressRow = page.getByRole('columnheader', { name: "Address"})
-        this.cityAndZipCodeRow = page.getByRole('columnheader', { name: "City, State/Province, Postal Code"})
-        this.countryRow = page.getByRole('columnheader', { name: "Country"})
-        this.addNewContactButton = page.getByRole('button', { name: "Add a New Contact"})
-        this.logoutButton = page.getByRole('button', { name: "Logout"})
-        this.headerText = page.getByRole('heading', { name: "ContactList"});
+        super(page);
+        this.headerText = page.getByRole('heading', { name: "Contact List"});
+        this.nameRow = page.locator('.contactTable').getByText("Name");
+        this.birthdayRow = page.locator('.contactTable').getByText("Birthdate");
+        this.emailRow = page.locator('.contactTable').getByText("Email");
+        this.phoneRow = page.locator('.contactTable').getByText("Phone");
+        this.addressRow = page.locator('.contactTable').getByText("Address");
+        this.cityAndZipCodeRow = page.locator('.contactTable').getByText("City, State/Province, Postal Code");
+        this.countryRow = page.locator('.contactTable').getByText("Country");
+        this.addNewContactButton = page.getByRole('button', { name: "Add a New Contact"});
+        this.logoutButton = page.getByRole('button', { name: "Logout"});
         this.allPageElements = [
+            this.headerText,
             this.nameRow,
             this.birthdayRow,
             this.emailRow,
@@ -38,17 +37,16 @@ export class ContactsPage extends BasePage {
             this.cityAndZipCodeRow,
             this.countryRow,
             this.addNewContactButton,
-            this.logoutButton,
-            this.headerText
-        ]
+            this.logoutButton
+        ];
     };
 
     async clickAddNewContactButton(){
-        await this.addNewContactButton.click()
-    }
+        await this.addNewContactButton.click();
+    };
 
     async clickLogOutButton(){
-        await this.logoutButton.click()
-    }
+        await this.logoutButton.click();
+    };
 
 }

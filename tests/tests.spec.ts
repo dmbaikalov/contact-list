@@ -54,48 +54,37 @@ test.describe.parallel('Website elements is visible', async () => {
     }
   });
 
-  test.describe.serial('Contacts page elements is visible', async () => {
-
-    test('Signing Up a new user', async ({ loginPage, signUpPage }) => {
-      await loginPage.open()
-      await loginPage.clickSignupButton();
-      await signUpPage.typeFirstName();
-      await signUpPage.typeLastName();
-      await signUpPage.typeEmail();
-      await signUpPage.typePassword();
-      await signUpPage.clickSignUpButton();
-    });
-
-    test('Checking page Contact page elements', async ({ contactsPage}) => {
-      await contactsPage.open()
-      await contactsPage.isOpen();
-      for(const el of contactsPage.allPageElements) {
-        await contactsPage.isElementVisible(el);
-      }
-    });
+  test('Contacts page elements is visible', async ({ loginPage, signUpPage, contactsPage }) => {
+    await loginPage.open()
+    await loginPage.clickSignupButton();
+    await signUpPage.typeFirstName();
+    await signUpPage.typeLastName();
+    await signUpPage.typeEmail();
+    await signUpPage.typePassword();
+    await signUpPage.clickSignUpButton();
+    await signUpPage.wait(1000)
+    await contactsPage.isOpen();
+    for(const el of contactsPage.allPageElements) {
+      await contactsPage.isElementVisible(el);
+    }
   });
 
-  test.describe.serial('Contacts page elements is visible', async () => {
-      
-      test('SignUp a new user', async ({ loginPage, signUpPage }) => {
-        await loginPage.open()
-        await loginPage.clickSignupButton();
-        await signUpPage.typeFirstName();
-        await signUpPage.typeLastName();
-        await signUpPage.typeEmail();
-        await signUpPage.typePassword();
-        await signUpPage.clickSignUpButton();
-      });
-
-      test('Add Contact page elements is visible', async ({ contactsPage, addContactPage }) => {
-        await contactsPage.open();
-        await contactsPage.isOpen();
-        await contactsPage.clickAddNewContactButton();
-        await addContactPage.isOpen();
-        for(const el of addContactPage.allPageElements) {
-          await addContactPage.isElementVisible(el);
-        }
-      });
+  test('Add Contact page elements is visible', async ({ loginPage, signUpPage, contactsPage, addContactPage }) => {
+    await loginPage.open()
+    await loginPage.clickSignupButton();
+    await signUpPage.typeFirstName();
+    await signUpPage.typeLastName();
+    await signUpPage.typeEmail();
+    await signUpPage.typePassword();
+    await signUpPage.clickSignUpButton();
+    await contactsPage.open();
+    await contactsPage.isOpen();
+    await contactsPage.clickAddNewContactButton();
+    await addContactPage.isOpen();
+    for(const el of addContactPage.allPageElements) {
+      await addContactPage.isElementVisible(el);
+    }
   });
 });
+
 

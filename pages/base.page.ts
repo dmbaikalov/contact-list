@@ -6,56 +6,54 @@ export class BasePage {
 	page: Page;
 
 	constructor(page: Page) {
-		this.page = page
-	}
+		this.page = page;
+	};
 
 	async open() {
-		await this.page.goto(this.pagePath, { waitUntil: 'networkidle' }, )
-	}
+		await this.page.goto(this.pagePath)
+	};
 
 	async isOpen(expected_url?: string) {
-		await expect(this.page.url()).toBe(expected_url || `${process.env.BASE_URL}${this.pagePath}`);
-	}
+		expect(this.page.url()).toBe(expected_url || `${process.env.BASE_URL}${this.pagePath}`);
+	};
 
 	async getTitle() {
-		return await this.page.title()
-	}
+		return await this.page.title();
+	};
 
 	async getUrl() {
-		return this.page.url()
-	}
+		return this.page.url();
+	};
 
 	async wait(milliseconds: number) {
-		console.log(`Test runner is in a waiting state for ${(milliseconds / 1000)} seconds`)
-		await this.page.waitForTimeout(milliseconds)
-	}
+		// console.log(`Test runner is in a waiting state for ${(milliseconds / 1000)} seconds`);
+		await this.page.waitForTimeout(milliseconds);
+	};
 
 	async waitForPageLoad() {
-		await this.page.waitForLoadState('domcontentloaded')
-	}
+		await this.page.waitForLoadState('domcontentloaded');
+	};
 
 	async takeScreenShot() {
-		const sreenshotPath = `screenshots/${new Date().toISOString().slice(0, 10).replace("T", '_time_')}_${test.info().title.replace(/[^a-zA-Z0-9]/g, '_')}.png`
-		await this.page.screenshot({ path: sreenshotPath })
-	}
+		const sreenshotPath = `screenshots/${new Date().toISOString().slice(0, 10).replace("T", '_time_')}_${test.info().title.replace(/[^a-zA-Z0-9]/g, '_')}.png`;
+		await this.page.screenshot({ path: sreenshotPath });
+	};
 
 	async verifyElementContainsText(selector: Locator, text: string) {
-		const locatorText = await selector.textContent()
-		await expect(locatorText).toBe(text)
-	}
+		const locatorText = await selector.textContent();
+		await expect(locatorText).toBe(text);
+	};
 
 	async selectValueFromDropdown(selector: Locator, text: string) {
-		await selector.selectOption({ value: text })
-	}
+		await selector.selectOption({ value: text });
+	};
 
 	async isElementVisible(selector: Locator) {
-		await selector.isVisible();
+		await expect(selector).toBeVisible();
 
-	}
+	};
 
 	async isElementNotVisible(selector: Locator) {
-		expect(selector).toBeHidden()
-	}
-
-
+		expect(selector).toBeHidden();
+	};
 }
