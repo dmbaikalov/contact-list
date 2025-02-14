@@ -17,9 +17,9 @@ env:
 
 jobs:
   chromium-tests:
+    if: github.event_name == 'push' || 'pull'
     runs-on: ubuntu-latest
     container: mcr.microsoft.com/playwright:v1.50.0-noble
-
     steps:
       - name: Repo check
         uses: actions/checkout@v4
@@ -66,10 +66,9 @@ jobs:
           allure_history: allure-history
           keep_reports: 20
 
-  Deploying-report-to-GH-page:
+  deploying-report-to-GH-page:
     needs: [building-report]
     runs-on: ubuntu-latest
-    container: mcr.microsoft.com/playwright:v1.50.0-noble
     steps:
       - name: Deploying report to GitHub pages
         uses: peaceiris/actions-gh-pages@v4
