@@ -22,7 +22,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN}}
+          token: ${{ secrets.DEPLOY_TOKEN }}
 
       - name: Running tests on Chromium
         if: github.event_name == 'push' || github.event_name == 'pull_request'
@@ -61,6 +61,6 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         if: always()
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.DEPLOY_TOKEN }}
           publish_branch: gh-pages
           publish_dir: allure-history
