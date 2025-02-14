@@ -38,7 +38,7 @@ jobs:
       - name: Install Allure
         run: npm install -g allure-commandline
 
-      - name: Run tests
+      - name: Running tests on Chromium
         run: npx playwright test --config=ui.config.ts --project=chromium --output=allure-results
 
       - name: Generate report
@@ -66,13 +66,13 @@ jobs:
       - name: Install Allure
         run: npm install -g allure-commandline
 
-      - name: Running tests for all browsers
+      - name: Running tests on all browsers
         run: npx playwright test --config=ui.config.ts --output=allure-results
 
       - name: Generate report
         run: allure generate allure-results --clean -o allure-report
 
-  building-report:
+  building-and-deploying-tests-report:
     if: always()
     needs: [chromium-tests, all-browsers-tests]
     runs-on: ubuntu-latest
@@ -90,15 +90,6 @@ jobs:
           allure_report: allure-report
           allure_history: allure-history
           keep_reports: 20
-
-  deploying-report-to-GH-page:
-    if: always()
-    needs: [building-report]
-    runs-on: ubuntu-latest
-    container: mcr.microsoft.com/playwright:v1.50.1-noble
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
 
       - name: Deploying report to GitHub pages
         uses: peaceiris/actions-gh-pages@v4
