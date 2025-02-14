@@ -71,22 +71,8 @@ jobs:
       - name: Repo check
         uses: actions/checkout@v4
 
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Install browsers
-        run: npx playwright install
-
-      - name: Install Java
-        run: |
-          apt-get update
-          apt-get install -y openjdk-11-jdk
-
-      - name: Install Allure
-        run: npm install -g allure-commandline
-
       - name: Running tests on Chromium
-        run: npm run tests:ui:chromium
+        run: docker compose run e2e-ui-tests /bin/sh -c "ls -la && npm run tests:ui:chromium"
 
       - name: Generate report
         run: allure generate allure-results --clean -o allure-report
