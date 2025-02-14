@@ -27,20 +27,20 @@ jobs:
       - name: Running tests on Chromium
         if: github.event_name == 'push' || github.event_name == 'pull_request'
         run: |
-          docker compose run e2e-ui-tests /bin/sh -c 
+          "docker compose run e2e-ui-tests /bin/sh -c 
           ls -la 
           npm ci
           npx playwright install 
-          npm run tests:ui:chromium
+          npm run tests:ui:chromium"
 
       - name: Running tests on all browsers
         if: github.event_name == 'schedule'
         run: |
           docker compose run e2e-ui-tests /bin/sh -c 
-          ls -la 
+          "ls -la 
           npm ci
           npx playwright install 
-          npm run tests:ui:all
+          npm run tests:ui:all"
 
       - name: Generate report
         run: allure generate allure-results --clean -o allure-report
