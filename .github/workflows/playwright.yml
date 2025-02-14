@@ -69,6 +69,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}
+          token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
 
       - name: Running tests on Chromium
         run: docker compose run e2e-ui-tests /bin/sh -c "ls -la && npm run tests:ui:chromium"
@@ -92,6 +95,6 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         if: always()
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           publish_branch: gh-pages
           publish_dir: allure-history
