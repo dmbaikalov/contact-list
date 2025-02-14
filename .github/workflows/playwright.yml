@@ -28,14 +28,12 @@ jobs:
       - name: Running tests on Chromium
         if: github.event_name == 'push' || github.event_name == 'pull_request'
         run: |
-          docker compose run e2e-ui-tests /bin/sh -c "ls -la &&  npm run tests:ui:chromium \
-          && allure generate allure-results --clean -o allure-report"
+          docker compose run e2e-ui-tests /bin/sh -c "ls -la &&  npm run tests:ui:chromium && allure generate allure-results --clean -o allure-report"
 
       - name: Running tests on all browsers
         if: github.event_name == 'schedule'
         run: |
-          docker compose run e2e-ui-tests /bin/sh -c "ls -la && npm run tests:ui:all \
-          && allure generate allure-results --clean -o allure-report"
+          docker compose run e2e-ui-tests /bin/sh -c "ls -la && npm run tests:ui:all && allure generate allure-results --clean -o allure-report"
 
       - name: Build test report
         uses: simple-elf/allure-report-action@master
