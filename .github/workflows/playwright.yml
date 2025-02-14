@@ -72,6 +72,7 @@ jobs:
         with:
           repository: ${{ github.repository }}
           token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          persist-credentials: false
 
       - name: Running tests on Chromium
         run: docker compose run e2e-ui-tests /bin/sh -c "ls -la && npm run tests:ui:chromium"
