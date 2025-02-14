@@ -31,7 +31,7 @@ jobs:
         run: npx playwright install
 
       - name: Run tests
-        run: npm run tests:ui:chromium
+        run: npx playwright tests --config=ui.config.ts --project=chromium
 
       - name: Generate report
         run: allure generate allure-results --clean -o allure-report
