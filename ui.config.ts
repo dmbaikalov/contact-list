@@ -13,7 +13,7 @@ const config: PlaywrightTestConfig = {
         actionTimeout: 10000,
         ignoreHTTPSErrors: true,
         trace: 'on',
-        screenshot: 'on',
+        screenshot: 'on-first-failure',
         
     },
     reporter:[
