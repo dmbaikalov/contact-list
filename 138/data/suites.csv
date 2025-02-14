@@ -1,0 +1,8 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","1826","User is able to Logout","chromium","Fri Feb 14 15:17:16 GMT 2025","passed","Fri Feb 14 15:17:18 GMT 2025","User is able to Sign Up,Login and Logout","tests.spec.ts","",""
+"","1998","Contacts page elements is visible","chromium","Fri Feb 14 15:17:14 GMT 2025","passed","Fri Feb 14 15:17:16 GMT 2025","Website elements is visible","tests.spec.ts","",""
+"","900","Login page elements is visible","chromium","Fri Feb 14 15:17:12 GMT 2025","passed","Fri Feb 14 15:17:13 GMT 2025","Website elements is visible","tests.spec.ts","",""
+"","1785","User is able to Login","chromium","Fri Feb 14 15:17:15 GMT 2025","passed","Fri Feb 14 15:17:16 GMT 2025","User is able to Sign Up,Login and Logout","tests.spec.ts","",""
+"","2109","User is able to Sign Up","chromium","Fri Feb 14 15:17:12 GMT 2025","passed","Fri Feb 14 15:17:15 GMT 2025","User is able to Sign Up,Login and Logout","tests.spec.ts","",""
+"","756","Sign Up page elements is visible","chromium","Fri Feb 14 15:17:13 GMT 2025","passed","Fri Feb 14 15:17:14 GMT 2025","Website elements is visible","tests.spec.ts","",""
+"","1355","Add Contact page elements is visible","chromium","Fri Feb 14 15:17:16 GMT 2025","passed","Fri Feb 14 15:17:18 GMT 2025","Website elements is visible","tests.spec.ts","",""
