@@ -98,6 +98,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+
       - name: Deploying report to GitHub pages
         uses: peaceiris/actions-gh-pages@v4
         with:
