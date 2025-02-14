@@ -35,8 +35,18 @@ jobs:
           apt-get update
           apt-get install -y openjdk-11-jdk
 
+      - name: Check Java version
+        run: java -version
+
       - name: Install Allure
         run: npm install -g allure-commandline
+
+      - name: Check if allure-results exists
+        run: |
+          if [ ! -d "allure-results" ]; then
+            echo "allure-results directory not found!";
+            exit 1;
+          fi
 
       - name: Run tests
         run: npx playwright test --config=ui.config.ts --project=chromium --output=allure-results
@@ -90,6 +100,8 @@ jobs:
     needs: [building-report]
     runs-on: ubuntu-latest
     steps:
+      - name: Set Git safe directory
+        run: git config --global --add safe.directory /github/workspace
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Deploying report to GitHub pages
