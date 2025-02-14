@@ -17,7 +17,7 @@ env:
 
 jobs:
   chromium-tests:
-    if: github.event_name == 'push' || 'pull'
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     container: mcr.microsoft.com/playwright:v1.50.1-noble
     steps:
@@ -31,9 +31,7 @@ jobs:
         run: npx playwright install
 
       - name: Install Allure
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y allure
+        run: npm install -g allure-commandline
 
       - name: Run tests
         run: npx playwright test --config=ui.config.ts --project=chromium --output=allure-results
@@ -56,9 +54,7 @@ jobs:
         run: npx playwright install
 
       - name: Install Allure
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y allure
+        run: npm install -g allure-commandline
 
       - name: Run tests
         run: npm run tests:ui:chromium
