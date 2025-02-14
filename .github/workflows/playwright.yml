@@ -94,9 +94,10 @@ jobs:
   deploying-report-to-GH-page:
     if: always()
     needs: [building-report]
-    container: mcr.microsoft.com/playwright:v1.50.1-noble
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: Deploying report to GitHub pages
         uses: peaceiris/actions-gh-pages@v4
         with:
