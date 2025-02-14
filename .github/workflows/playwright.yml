@@ -95,11 +95,10 @@ jobs:
     if: always()
     needs: [building-report]
     runs-on: ubuntu-latest
+    container: mcr.microsoft.com/playwright:v1.50.1-noble
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
 
       - name: Deploying report to GitHub pages
         uses: peaceiris/actions-gh-pages@v4
