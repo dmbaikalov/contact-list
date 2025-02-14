@@ -35,21 +35,11 @@ jobs:
           apt-get update
           apt-get install -y openjdk-11-jdk
 
-      - name: Check Java version
-        run: java -version
-
       - name: Install Allure
         run: npm install -g allure-commandline
 
       - name: Run tests
         run: npx playwright test --config=ui.config.ts --project=chromium --output=allure-results
-
-      - name: Check if allure-results exists
-        run: |
-          if [ ! -d "allure-results" ]; then
-            echo "allure-results directory not found!";
-            exit 1;
-          fi
 
       - name: Generate report
         run: allure generate allure-results --clean -o allure-report
@@ -57,7 +47,7 @@ jobs:
   all-browsers-tests:
     if: github.event_name == 'schedule'
     runs-on: ubuntu-latest
-    container: mcr.microsoft.com/playwright:v1.50.01-noble
+    container: mcr.microsoft.com/playwright:v1.50.1-noble
     steps:
       - name: Repo check
         uses: actions/checkout@v4
@@ -68,11 +58,16 @@ jobs:
       - name: Install browsers
         run: npx playwright install
 
+      - name: Install Java
+        run: |
+          apt-get update
+          apt-get install -y openjdk-11-jdk
+
       - name: Install Allure
         run: npm install -g allure-commandline
 
-      - name: Run tests
-        run: npm run tests:ui:chromium
+      - name: Running tests for all browsers
+        run: npx playwright test --config=ui.config.ts --output=allure-results
 
       - name: Generate report
         run: allure generate allure-results --clean -o allure-report
@@ -99,28 +94,9 @@ jobs:
   deploying-report-to-GH-page:
     if: always()
     needs: [building-report]
+    container: mcr.microsoft.com/playwright:v1.50.1-noble
     runs-on: ubuntu-latest
     steps:
-      - name: Set Git safe directory
-        run: git config --global --add safe.directory /github/workspace
-
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          repository: dmbaikalov/interview-ui-framework-showcase
-          token: ${{ secrets.GITHUB_TOKEN }}
-          ssh-strict: true
-          ssh-user: git
-          persist-credentials: true
-          clean: true
-          sparse-checkout-cone-mode: true
-          fetch-depth: 1
-          fetch-tags: false
-          show-progress: true
-          lfs: false
-          submodules: false
-          set-safe-directory: true
-
       - name: Deploying report to GitHub pages
         uses: peaceiris/actions-gh-pages@v4
         with:
