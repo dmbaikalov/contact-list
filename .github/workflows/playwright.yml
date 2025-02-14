@@ -21,8 +21,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.DEPLOY_KEY }}
 
       - name: Running tests on Chromium
         if: github.event_name == 'push' || github.event_name == 'pull_request'
