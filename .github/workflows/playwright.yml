@@ -14,16 +14,17 @@ on:
 env:
   BASE_URL: ${{ secrets.BASE_URL }}
   HOME: /root
-  DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
 
 jobs:
   e2e-ui-tests:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.DEPLOY_KEY }}
+          token: ${{ secrets.GITHUB_TOKEN}}
 
       - name: Running tests on Chromium
         if: github.event_name == 'push' || github.event_name == 'pull_request'
@@ -61,7 +62,8 @@ jobs:
       - name: Deploying report to GitHub pages
         uses: peaceiris/actions-gh-pages@v4
         if: always()
+
         with:
-          deploy_key: ${{ secrets.DEPLOY_KEY }}
+          deploy_key: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: allure-history
