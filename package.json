@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/package",
   "name": "cv-framework-showcase",
   "version": "1.0.0",
   "description": "",
