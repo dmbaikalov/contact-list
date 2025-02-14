@@ -76,7 +76,6 @@ jobs:
     if: always()
     needs: [chromium-tests, all-browsers-tests]
     runs-on: ubuntu-latest
-    container: mcr.microsoft.com/playwright:v1.50.1-noble
     steps:
       - name: Load test report history
         uses: actions/checkout@v4
@@ -84,7 +83,7 @@ jobs:
         continue-on-error: true
         with:
           ref: gh-pages
-          path: test-results
+          path: test-report
 
       - name: Build test report
         uses: simple-elf/allure-report-action@master
