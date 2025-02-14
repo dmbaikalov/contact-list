@@ -39,7 +39,7 @@ jobs:
         run: npm install -g allure-commandline
 
       - name: Running tests on Chromium
-        run: npx playwright test --config=ui.config.ts --project=chromium --output=allure-results
+        run: npm run ui:tests:chromium
 
       - name: Generate report
         run: allure generate allure-results --clean -o allure-report
@@ -67,7 +67,7 @@ jobs:
         run: npm install -g allure-commandline
 
       - name: Running tests on all browsers
-        run: npx playwright test --config=ui.config.ts --output=allure-results
+        run: npm run ui:tests:all
 
       - name: Generate report
         run: allure generate allure-results --clean -o allure-report
@@ -84,8 +84,8 @@ jobs:
       - name: Collecting and building test report
         uses: simple-elf/allure-report-action@master
         continue-on-error: true
+        id: allure-report
         with:
-          allure_results: allure-results
           gh_pages: gh-pages
           allure_report: allure-report
           allure_history: allure-history
