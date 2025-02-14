@@ -1,6 +1,15 @@
 name: Playwright Tests
 
-on: [push]
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 8 * * 1-5"
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 env:
   BASE_URL: ${{ secrets.BASE_URL }}
@@ -22,13 +31,13 @@ jobs:
         run: npx playwright install
 
       - name: ui-chromium-tests
-        run: npx playwright test --config=ui.config.ts --project=chromium
+        run: npm run tests:ui:chromium
 
       - name: ui-firefox-tests
-        run: npx playwright test --config=ui.config.ts --project=firefox
+        run: npm run tests:ui:firefox
 
       - name: ui-webkit-tests
-        run: npx playwright test --config=ui.config.ts --project=webkit
+        run: npm run tests:ui:webkit
 
       - name: Building report
         uses: simple-elf/allure-report-action@master
