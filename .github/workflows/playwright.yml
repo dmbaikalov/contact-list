@@ -67,11 +67,11 @@ jobs:
     if: github.event_name == 'push' || github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
-      - name: Repo check
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Running tests on Chromium
-        run: docker compose run e2e-ui-tests /bin/sh -c "ls -la && npm run tests:ui:chromium"
+        run: docker compose run e2e-ui-tests /bin/sh -c "ls -la && npm install && npm run tests:ui:chromium"
 
       - name: Generate report
         run: allure generate allure-results --clean -o allure-report
