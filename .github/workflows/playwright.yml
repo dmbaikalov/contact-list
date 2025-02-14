@@ -39,14 +39,6 @@ jobs:
           && npm ci && npx playwright install && npm run tests:ui:all \
           && allure generate allure-results --clean -o allure-report"
 
-      - name: Get Allure history
-        uses: actions/checkout@v4
-        if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
-
       - name: Build test report
         uses: simple-elf/allure-report-action@master
         if: always()
