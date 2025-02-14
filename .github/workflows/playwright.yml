@@ -71,7 +71,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Running tests on Chromium
-        run: docker compose run e2e-ui-tests /bin/sh -c "ls -la && npm install && npm run tests:ui:chromium"
+        run: docker compose run e2e-ui-tests /bin/sh -c "ls -la && npm run tests:ui:chromium"
 
       - name: Generate report
         run: allure generate allure-results --clean -o allure-report
@@ -79,6 +79,7 @@ jobs:
       - name: Build test report
         uses: simple-elf/allure-report-action@master
         if: always()
+        id: allure-report
         continue-on-error: true
         with:
           allure_results: allure-results
@@ -91,6 +92,6 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         if: always()
         with:
-          github_token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: allure-history
