@@ -1,5 +1,6 @@
 import { test } from "../fixtures/fixtures";
-import { createScreenshotOnFailure } from "../utils/test.utils";
+import { createScreenshotOnFailure } from "../utils/screenshots.utils";
+import * as allure from "allure-js-commons";
 
 test.afterEach(async ({ page }) => {
   if (test.info().status === 'failed') {
@@ -8,8 +9,8 @@ test.afterEach(async ({ page }) => {
 });
 
 test.describe.serial('User is able to Sign Up,Login and Logout', async () => {
-  
   test('User is able to Sign Up', async ({ loginPage, signUpPage, contactsPage }) => {
+    
     await loginPage.open()
     await loginPage.clickSignupButton();
     await signUpPage.typeFirstName();
@@ -19,6 +20,7 @@ test.describe.serial('User is able to Sign Up,Login and Logout', async () => {
     await signUpPage.clickSignUpButton();
     await loginPage.wait(1000);
     await contactsPage.isOpen();
+
   });
 
   test('User is able to Login', async ({ loginPage, contactsPage }) => {
