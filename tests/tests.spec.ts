@@ -52,9 +52,7 @@ test.describe.parallel("Website elements is visible", async () => {
         }
     });
 
-    test("Sign Up page elements is visible", async ({
-        signUpPage,
-    }) => {
+    test("Sign Up page elements is visible", async ({ signUpPage }) => {
         await signUpPage.open();
         await signUpPage.isOpen();
         for (const el of signUpPage.allPageElements) {
