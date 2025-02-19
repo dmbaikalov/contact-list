@@ -1,8 +1,9 @@
 import { Locator, Page } from "@playwright/test";
 import { BasePage } from "./base.page";
+import { step } from "../utils/step.utils";
 
 export class ContactsPage extends BasePage {
-    public pagePath = `contactList`
+    public pagePath = `contactList`;
     readonly allPageElements: Locator[];
     private readonly nameRow: Locator;
     private readonly birthdayRow: Locator;
@@ -15,18 +16,22 @@ export class ContactsPage extends BasePage {
     private readonly logoutButton: Locator;
     private readonly headerText: Locator;
 
-    constructor(page: Page){
+    constructor(page: Page) {
         super(page);
-        this.headerText = page.getByRole('heading', { name: "Contact List"});
-        this.nameRow = page.locator('.contactTable').getByText("Name");
-        this.birthdayRow = page.locator('.contactTable').getByText("Birthdate");
-        this.emailRow = page.locator('.contactTable').getByText("Email");
-        this.phoneRow = page.locator('.contactTable').getByText("Phone");
-        this.addressRow = page.locator('.contactTable').getByText("Address");
-        this.cityAndZipCodeRow = page.locator('.contactTable').getByText("City, State/Province, Postal Code");
-        this.countryRow = page.locator('.contactTable').getByText("Country");
-        this.addNewContactButton = page.getByRole('button', { name: "Add a New Contact"});
-        this.logoutButton = page.getByRole('button', { name: "Logout"});
+        this.headerText = page.getByRole("heading", { name: "Contact List" });
+        this.nameRow = page.locator(".contactTable").getByText("Name");
+        this.birthdayRow = page.locator(".contactTable").getByText("Birthdate");
+        this.emailRow = page.locator(".contactTable").getByText("Email");
+        this.phoneRow = page.locator(".contactTable").getByText("Phone");
+        this.addressRow = page.locator(".contactTable").getByText("Address");
+        this.cityAndZipCodeRow = page
+            .locator(".contactTable")
+            .getByText("City, State/Province, Postal Code");
+        this.countryRow = page.locator(".contactTable").getByText("Country");
+        this.addNewContactButton = page.getByRole("button", {
+            name: "Add a New Contact",
+        });
+        this.logoutButton = page.getByRole("button", { name: "Logout" });
         this.allPageElements = [
             this.headerText,
             this.nameRow,
@@ -37,16 +42,17 @@ export class ContactsPage extends BasePage {
             this.cityAndZipCodeRow,
             this.countryRow,
             this.addNewContactButton,
-            this.logoutButton
+            this.logoutButton,
         ];
-    };
+    }
 
-    async clickAddNewContactButton(){
+    @step("Clicking Add New Contact button")
+    async clickAddNewContactButton() {
         await this.addNewContactButton.click();
-    };
+    }
 
-    async clickLogOutButton(){
+    @step("Clicking Logout Button")
+    async clickLogOutButton() {
         await this.logoutButton.click();
-    };
-
+    }
 }
