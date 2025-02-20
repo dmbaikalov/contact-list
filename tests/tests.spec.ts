@@ -54,7 +54,7 @@ test.describe.serial("User is able to Sign Up,Login and Logout", async () => {
 test.describe.parallel("Website elements is visible", async () => {
     test(
         "Login page elements is visible",
-        { tag: "@functional" },
+        { tag: "@visibility" },
         async ({ loginPage }) => {
             await loginPage.open();
             await loginPage.isOpen();
@@ -66,7 +66,7 @@ test.describe.parallel("Website elements is visible", async () => {
 
     test(
         "Sign Up page elements is visible",
-        { tag: "@functional" },
+        { tag: "@visibility" },
         async ({ signUpPage }) => {
             await signUpPage.open();
             await signUpPage.isOpen();
@@ -78,7 +78,7 @@ test.describe.parallel("Website elements is visible", async () => {
 
     test(
         "Contacts page elements is visible",
-        { tag: "@functional" },
+        { tag: "@visibility" },
         async ({ loginPage, signUpPage, contactsPage }) => {
             await loginPage.open();
             await loginPage.clickSignupButton();
@@ -97,7 +97,7 @@ test.describe.parallel("Website elements is visible", async () => {
 
     test(
         "Add Contact page elements is visible",
-        { tag: "@functional" },
+        { tag: "@visibility" },
         async ({ loginPage, signUpPage, contactsPage, addContactPage }) => {
             await loginPage.open();
             await loginPage.clickSignupButton();
