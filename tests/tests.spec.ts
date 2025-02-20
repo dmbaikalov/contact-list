@@ -40,7 +40,7 @@ test.describe.serial("User is able to Sign Up,Login and Logout", async () => {
 
     test(
         "User is able to Logout",
-        { tag: ["@smoke", "@Known Issue"] },
+        { tag: ["@smoke", "@Known-Issue"] },
         async ({ loginPage, contactsPage }) => {
             await contactsPage.open();
             await contactsPage.isOpen();
