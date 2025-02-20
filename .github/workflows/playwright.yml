@@ -12,8 +12,8 @@ on:
             - main
 
 env:
-    BASE_URL: ${{ vars.BASE_URL }}
-    ENV: ${{ vars.ENV }}
+    BASE_URL: ${{ secrets.BASE_URL }}
+    ENV: ${{ secrets.ENV }}
 
 jobs:
     lint-and-format:
@@ -60,8 +60,8 @@ jobs:
             - name: Set up Allure environment properties
               run: |
                   mkdir -p allure-results
-                  echo "BASE_URL=${{ vars.BASE_URL }}" >> allure-results/environment.properties
-                  echo "ENVIRONMENT=${{ vars.ENV }}" >> allure-results/environment.properties
+                  echo "BASE_URL=${{ secrets.BASE_URL }}" >> allure-results/environment.properties
+                  echo "ENVIRONMENT=${{ secrets.ENV }}" >> allure-results/environment.properties
 
             - name: Running tests on Chromium
               if: github.event_name == 'push' || github.event_name == 'pull_request'
