@@ -59,15 +59,14 @@ jobs:
 
             - name: Set up Allure environment properties
               run: |
+                  mkdir -p allure-results
                   echo "BASE_URL=${{ vars.BASE_URL }}" >> allure-results/environment.properties
                   echo "ENVIRONMENT=${{ vars.ENV }}" >> allure-results/environment.properties
 
             - name: Running tests on Chromium
               if: github.event_name == 'push' || github.event_name == 'pull_request'
               run: |
-
                   docker compose run e2e-ui-tests /bin/sh -c "ls -la \
-                  echo 'BROWSER=Chromium' >> allure-results/environment.properties \
                   && npm ci && npx playwright install && npm run tests:ui:chromium \
                   && allure generate allure-results --clean -o allure-report"
 
