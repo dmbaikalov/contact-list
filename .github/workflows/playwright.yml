@@ -63,6 +63,10 @@ jobs:
                   echo "BASE_URL=${{ vars.BASE_URL }}" >> allure-results/environment.properties
                   echo "ENVIRONMENT=${{ vars.ENV }}" >> allure-results/environment.properties
 
+            - name: Add Allure categories
+              run: |
+                  echo '[{"name":"Known Issue","description":"These are known bugs.","matchedStatuses":["failed"],"matchedMessagePattern":".*Known issue.*"}]' > allure-results/categories.json
+
             - name: Running tests on Chromium
               if: github.event_name == 'push' || github.event_name == 'pull_request'
               run: |
