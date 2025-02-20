@@ -56,6 +56,10 @@ jobs:
                     cp -r gh-pages/history allure-results/
                   fi
 
+            - name: Set up Allure environment properties
+              run: |
+                  echo "BASE_URL=${{ secrets.BASE_URL }}" >> allure-results/environment.properties
+
             - name: Running tests on Chromium
               if: github.event_name == 'push' || github.event_name == 'pull_request'
               run: |
