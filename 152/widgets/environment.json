@@ -1,1 +1,0 @@
-[{"values":[""],"name":"BASE_URL"},{"values":[""],"name":"ENVIRONMENT"},{"values":["Chromium docker compose run e2e-ui-tests /bin/sh -c ls -la && npm ci && npx playwright install && npm run tests:ui:chromium && allure generate allure-results --clean -o allure-report"],"name":"BROWSER"}]
