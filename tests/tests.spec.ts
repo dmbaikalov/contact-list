@@ -46,7 +46,7 @@ test.describe.serial("User is able to Sign Up,Login and Logout", async () => {
             await contactsPage.isOpen();
             await contactsPage.clickLogOutButton();
             await loginPage.wait(1000);
-            await loginPage.isOpen(`${process.env.BASE_URL}1`);
+            await loginPage.isOpen(`${process.env.BASE_URL}`);
         },
     );
 });
@@ -55,12 +55,13 @@ test.describe.parallel("Website elements is visible", async () => {
     test(
         "Login page elements is visible",
         { tag: ["@visibility"] },
-        async ({ loginPage }) => {
+        async ({ page, loginPage }) => {
+            await page.video();
             await loginPage.open();
             await loginPage.isOpen();
-            for (const el of loginPage.allPageElements) {
-                await loginPage.isElementsVisible(el);
-            }
+            loginPage.allPageElements.forEach((el) =>
+                loginPage.isElementsVisible(el),
+            );
         },
     );
 
@@ -70,9 +71,9 @@ test.describe.parallel("Website elements is visible", async () => {
         async ({ signUpPage }) => {
             await signUpPage.open();
             await signUpPage.isOpen();
-            for (const el of signUpPage.allPageElements) {
-                await signUpPage.isElementsVisible(el);
-            }
+            signUpPage.allPageElements.forEach((el) =>
+                signUpPage.isElementsVisible(el),
+            );
         },
     );
 
@@ -89,9 +90,9 @@ test.describe.parallel("Website elements is visible", async () => {
             await signUpPage.clickSignUpButton();
             await signUpPage.wait(1000);
             await contactsPage.isOpen();
-            for (const el of contactsPage.allPageElements) {
-                await contactsPage.isElementsVisible(el);
-            }
+            contactsPage.allPageElements.forEach((el) =>
+                contactsPage.isElementsVisible(el),
+            );
         },
     );
 
@@ -110,9 +111,9 @@ test.describe.parallel("Website elements is visible", async () => {
             await contactsPage.isOpen();
             await contactsPage.clickAddNewContactButton();
             await addContactPage.isOpen();
-            for (const el of addContactPage.allPageElements) {
-                await addContactPage.isElementsVisible(el);
-            }
+            addContactPage.allPageElements.forEach((el) =>
+                addContactPage.isElementsVisible(el),
+            );
         },
     );
 });
