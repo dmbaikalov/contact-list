@@ -7,9 +7,6 @@ on:
     push:
         branches:
             - main
-    pull_request:
-        branches:
-            - main
 
 env:
     BASE_URL: ${{ vars.BASE_URL }}
@@ -44,7 +41,7 @@ jobs:
               with:
                   token: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: Checkout gh-pages branch (to restore history)
+            - name: Checkout gh-pages branch to restore history
               uses: actions/checkout@v4
               with:
                   ref: gh-pages
