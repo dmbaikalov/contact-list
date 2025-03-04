@@ -17,16 +17,7 @@ const config: PlaywrightTestConfig = {
         trace: "on",
         screenshot: "on-first-failure",
     },
-    reporter: [
-        [
-            "allure-playwright",
-            {
-                detail: true,
-                suiteTitle: true,
-                open: "never",
-            },
-        ],
-    ],
+    reporter: process.env.CI ? "allure-playwright" : "line",
     projects: [
         {
             name: "chromium",
