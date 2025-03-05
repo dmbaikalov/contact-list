@@ -99,6 +99,7 @@ test.describe.parallel("Website elements is visible", async () => {
             await signUpPage.fillingRequiredFields();
             await signUpPage.clickSignUpButton();
             await contactsPage.open();
+            await signUpPage.wait(1000);
             await contactsPage.isOpen();
             contactsPage.allPageElements.forEach((el) =>
                 contactsPage.isElementsVisible(el),
