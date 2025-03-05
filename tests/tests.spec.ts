@@ -38,7 +38,7 @@ test.describe.parallel("End to end tests", async () => {
         },
     );
 
-    test.fail(
+    test(
         "User is able to Login",
         { tag: ["@smoke", "@regression"] },
         async ({ loginPage, contactsPage }) => {
@@ -98,7 +98,7 @@ test.describe.parallel("Website elements is visible", async () => {
             await loginPage.clickSignupButton();
             await signUpPage.fillingRequiredFields();
             await signUpPage.clickSignUpButton();
-            await signUpPage.wait(1000);
+            await contactsPage.wait(2000);
             await contactsPage.isOpen();
             contactsPage.allPageElements.forEach((el) =>
                 contactsPage.isElementsVisible(el),
