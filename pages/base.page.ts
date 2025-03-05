@@ -1,11 +1,10 @@
 import { test, expect, Locator, Page } from "@playwright/test";
 import { step } from "../utils/step.utils";
 
-export class BasePage {
+export abstract class BasePage {
     public pagePath = `/`;
-    page: Page;
 
-    constructor(page: Page) {
+    constructor(protected page: Page) {
         this.page = page;
     }
 

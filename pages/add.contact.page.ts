@@ -1,70 +1,95 @@
-import { Page, Locator } from "@playwright/test";
+import { Locator } from "@playwright/test";
 import { BasePage } from "./base.page";
+import { contactData } from "../utils/test.data.generator.utils";
 
 export class AddContactPage extends BasePage {
     public pagePath = `addContact`;
-    readonly allPageElements: Locator[];
-    private readonly headerText: Locator;
-    private readonly firstNameField: Locator;
-    private readonly lastNameField: Locator;
-    private readonly birthdayDateField: Locator;
-    private readonly emailField: Locator;
-    private readonly phoneField: Locator;
-    private readonly streetAddress1Field: Locator;
-    private readonly streetAddress2Field: Locator;
-    private readonly cityField: Locator;
-    private readonly stateField: Locator;
-    private readonly zipcodeField: Locator;
-    private readonly countryField: Locator;
-    private readonly submitButton: Locator;
-    private readonly cancelButton: Locator;
-    private readonly logoutButton: Locator;
+    private readonly headerText = this.page.getByRole("heading", {
+        name: "Add Contact",
+    });
+    private readonly firstNameField = this.page.getByRole("textbox", {
+        name: "* First Name:",
+    });
+    private readonly lastNameField = this.page.getByRole("textbox", {
+        name: "* Last Name:",
+    });
+    private readonly birthdayDateField = this.page.getByRole("textbox", {
+        name: "Date of Birth:",
+    });
+    private readonly emailField = this.page.getByRole("textbox", {
+        name: "Email:",
+    });
+    private readonly phoneField = this.page.getByRole("textbox", {
+        name: "Phone:",
+    });
+    private readonly streetAddress1Field = this.page.getByRole("textbox", {
+        name: "Street Address 1:",
+    });
+    private readonly streetAddress2Field = this.page.getByRole("textbox", {
+        name: "Street Address 2:",
+    });
+    private readonly cityField = this.page.getByRole("textbox", {
+        name: "City:",
+    });
+    private readonly stateField = this.page.getByRole("textbox", {
+        name: "State or Province:",
+    });
+    private readonly zipcodeField = this.page.getByRole("textbox", {
+        name: "Postal Code:",
+    });
+    private readonly countryField = this.page.getByRole("textbox", {
+        name: "Country:",
+    });
+    private readonly submitButton = this.page.getByRole("button", {
+        name: "Submit",
+    });
+    private readonly cancelButton = this.page.getByRole("button", {
+        name: "Cancel",
+    });
+    private readonly logoutButton = this.page.getByRole("button", {
+        name: "Logout",
+    });
+    readonly allPageElements = [
+        this.headerText,
+        this.firstNameField,
+        this.lastNameField,
+        this.birthdayDateField,
+        this.emailField,
+        this.phoneField,
+        this.streetAddress1Field,
+        this.streetAddress2Field,
+        this.cityField,
+        this.stateField,
+        this.zipcodeField,
+        this.countryField,
+        this.submitButton,
+        this.cancelButton,
+        this.logoutButton,
+    ];
 
-    constructor(page: Page) {
-        super(page);
-        this.headerText = page.getByRole("heading", { name: "Add Contact" });
-        this.firstNameField = page.getByRole("textbox", {
-            name: "* First Name:",
-        });
-        this.lastNameField = page.getByRole("textbox", {
-            name: "* Last Name:",
-        });
-        this.birthdayDateField = page.getByRole("textbox", {
-            name: "Date of Birth:",
-        });
-        this.emailField = page.getByRole("textbox", { name: "Email:" });
-        this.phoneField = page.getByRole("textbox", { name: "Phone:" });
-        this.streetAddress1Field = page.getByRole("textbox", {
-            name: "Street Address 1:",
-        });
-        this.streetAddress2Field = page.getByRole("textbox", {
-            name: "Street Address 2:",
-        });
-        this.cityField = page.getByRole("textbox", { name: "City:" });
-        this.stateField = page.getByRole("textbox", {
-            name: "State or Province:",
-        });
-        this.zipcodeField = page.getByRole("textbox", { name: "Postal Code:" });
-        this.countryField = page.getByRole("textbox", { name: "Country:" });
-        this.submitButton = page.getByRole("button", { name: "Submit" });
-        this.cancelButton = page.getByRole("button", { name: "Cancel" });
-        this.logoutButton = page.getByRole("button", { name: "Logout" });
-        this.allPageElements = [
-            this.headerText,
-            this.firstNameField,
-            this.lastNameField,
-            this.birthdayDateField,
-            this.emailField,
-            this.phoneField,
-            this.streetAddress1Field,
-            this.streetAddress2Field,
-            this.cityField,
-            this.stateField,
-            this.zipcodeField,
-            this.countryField,
-            this.submitButton,
-            this.cancelButton,
-            this.logoutButton,
-        ];
+    async fillRequiredFields() {
+        await this.firstNameField.fill(contactData.firstName);
+        await this.lastNameField.fill(contactData.lastName);
+        // await this.birthdayDateField.fill(`${contactData.birthdayDate}`);
+        await this.emailField.fill(contactData.email);
+        // await this.phoneField.fill(contactData.phone);
+        await this.streetAddress1Field.fill(contactData.streetAddress1);
+        await this.streetAddress2Field.fill(contactData.streetAddress2);
+        await this.cityField.fill(contactData.city);
+        await this.stateField.fill(contactData.state);
+        await this.zipcodeField.fill(contactData.zipcode);
+        await this.countryField.fill(contactData.country);
+    }
+
+    async clickSubmitButton() {
+        await this.submitButton.click();
+    }
+
+    async clickCancelButton() {
+        await this.cancelButton.click();
+    }
+
+    async clickLogOutButton() {
+        await this.logoutButton.click();
     }
 }

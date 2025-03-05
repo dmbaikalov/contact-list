@@ -1,58 +1,46 @@
-import { Page, Locator, expect } from "@playwright/test";
+import { Locator, expect } from "@playwright/test";
 import { signUpData } from "../utils/test.data.generator.utils";
 import { BasePage } from "./base.page";
 import { step } from "../utils/step.utils";
 
 export class SignUpPage extends BasePage {
     public pagePath = `addUser`;
-    readonly allPageElements: Locator[];
-    readonly signUpHeaderText: Locator;
-    readonly firstNameField: Locator;
-    readonly lastNameField: Locator;
-    readonly signUpEmailField: Locator;
-    readonly signUpPasswordField: Locator;
-    readonly signUpSubmitButton: Locator;
-    readonly signUpCancelButton: Locator;
+    private readonly signUpHeaderText = this.page.getByRole("heading", {
+        name: "Add User",
+    });
+    private readonly firstNameField = this.page.getByRole("textbox", {
+        name: "First Name",
+    });
+    private readonly lastNameField = this.page.getByRole("textbox", {
+        name: "Last Name",
+    });
+    private readonly signUpEmailField = this.page.getByRole("textbox", {
+        name: "Email",
+    });
+    private readonly signUpPasswordField = this.page.getByRole("textbox", {
+        name: "Password",
+    });
+    private readonly signUpSubmitButton = this.page.getByRole("button", {
+        name: "Submit",
+    });
+    private readonly signUpCancelButton = this.page.getByRole("button", {
+        name: "Cancel",
+    });
+    readonly allPageElements = [
+        this.signUpHeaderText,
+        this.firstNameField,
+        this.lastNameField,
+        this.signUpEmailField,
+        this.signUpPasswordField,
+        this.signUpSubmitButton,
+        this.signUpCancelButton,
+    ];
 
-    constructor(page: Page) {
-        super(page);
-        this.signUpHeaderText = page.getByRole("heading", { name: "Add User" });
-        this.firstNameField = page.getByRole("textbox", { name: "First Name" });
-        this.lastNameField = page.getByRole("textbox", { name: "Last Name" });
-        this.signUpEmailField = page.getByRole("textbox", { name: "Email" });
-        this.signUpPasswordField = page.getByRole("textbox", {
-            name: "Password",
-        });
-        this.signUpSubmitButton = page.getByRole("button", { name: "Submit" });
-        this.signUpCancelButton = page.getByRole("button", { name: "Cancel" });
-        this.allPageElements = [
-            this.signUpHeaderText,
-            this.firstNameField,
-            this.lastNameField,
-            this.signUpEmailField,
-            this.signUpPasswordField,
-            this.signUpSubmitButton,
-            this.signUpCancelButton,
-        ];
-    }
-
-    @step("Filling First Name field")
-    async typeFirstName() {
+    @step("Filling required fields to Sign Up new user")
+    async fillingRequiredFields() {
         await this.firstNameField.fill(signUpData.firstName);
-    }
-
-    @step("Filling Last Name field")
-    async typeLastName() {
         await this.lastNameField.fill(signUpData.lastName);
-    }
-
-    @step("Filling Email field")
-    async typeEmail() {
         await this.signUpEmailField.fill(signUpData.email);
-    }
-
-    @step("Filling Password field")
-    async typePassword() {
         await this.signUpPasswordField.fill(signUpData.password);
     }
 
