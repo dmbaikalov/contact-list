@@ -21,7 +21,7 @@ const config: PlaywrightTestConfig = {
         [
             "allure-playwright",
             {
-                detail: true,
+                outputFolder: "allure-results",
                 suiteTitle: true,
                 open: "never",
             },
