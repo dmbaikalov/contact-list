@@ -1,6 +1,7 @@
 import { Locator } from "@playwright/test";
 import { BasePage } from "./base.page";
 import { contactData } from "../utils/test.data.generator.utils";
+import { step } from "../utils/step.utils";
 
 export class AddContactPage extends BasePage {
     public pagePath = `addContact`;
@@ -67,6 +68,7 @@ export class AddContactPage extends BasePage {
         this.logoutButton,
     ];
 
+    @step("Fillin all required contact fields")
     async fillRequiredFields() {
         await this.firstNameField.fill(contactData.firstName);
         await this.lastNameField.fill(contactData.lastName);
@@ -81,14 +83,17 @@ export class AddContactPage extends BasePage {
         await this.countryField.fill(contactData.country);
     }
 
+    @step("Clicking Submit button")
     async clickSubmitButton() {
         await this.submitButton.click();
     }
 
+    @step("Clicking Cancel button")
     async clickCancelButton() {
         await this.cancelButton.click();
     }
 
+    @step("Clicking Log Out button")
     async clickLogOutButton() {
         await this.logoutButton.click();
     }
