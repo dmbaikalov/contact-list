@@ -1,5 +1,3 @@
-This repository is a showcase of a UI automation testing framework built with Playwright and TypeScript. It includes Docker support and follows best practices for linting, formatting, and test execution.
-
 ## Installation
 
 Clone the repository and install dependencies:
