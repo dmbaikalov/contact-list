@@ -93,12 +93,8 @@ test.describe.parallel("Website elements is visible", async () => {
     test(
         "Contacts page elements is visible",
         { tag: ["@visibility", "@regression"] },
-        async ({ loginPage, signUpPage, contactsPage }) => {
-            await loginPage.open();
-            await loginPage.clickSignupButton();
-            await signUpPage.fillingRequiredFields();
-            await signUpPage.clickSignUpButton();
-            await contactsPage.wait(2000);
+        async ({ contactsPage }) => {
+            await contactsPage.open();
             await contactsPage.isOpen();
             contactsPage.allPageElements.forEach((el) =>
                 contactsPage.isElementsVisible(el),
@@ -109,15 +105,8 @@ test.describe.parallel("Website elements is visible", async () => {
     test(
         "Add Contact page elements is visible",
         { tag: ["@visibility", "@regression"] },
-        async ({ loginPage, signUpPage, contactsPage, addContactPage }) => {
-            await loginPage.open();
-            await loginPage.clickSignupButton();
-            await signUpPage.fillingRequiredFields();
-            await signUpPage.clickSignUpButton();
-            await contactsPage.open();
-            await contactsPage.isOpen();
-            await contactsPage.clickAddNewContactButton();
-            await signUpPage.wait(1000);
+        async ({ addContactPage }) => {
+            await addContactPage.open();
             await addContactPage.isOpen();
             addContactPage.allPageElements.forEach((el) =>
                 addContactPage.isElementsVisible(el),
