@@ -5,10 +5,9 @@ This repository is a showcase of a UI automation testing framework built with Pl
 Clone the repository and install dependencies:
 
 ```
-git clone <repo-url>
+git clone https://github.com/dmbaikalov/interview-ui-framework-showcase.git
 cd interview-ui-framework-showcase-main
-npm ci
-npx playwright install
+npm install
 ```
 
 ## Running Tests
