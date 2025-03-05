@@ -4,7 +4,7 @@ Clone the repository and install dependencies:
 
 ```
 git clone https://github.com/dmbaikalov/interview-ui-framework-showcase.git
-cd interview-ui-framework-showcase-main
+cd interview-ui-framework-showcase
 npm install
 ```
 
