@@ -9,6 +9,7 @@ export function step(stepName?: string) {
             const className = this.constructor.name;
             const methodName = String(context.name);
 
+            // Replacing _PageName_ in step title with used in test page name
             let sName = stepName
                 ? stepName.replace("_PageName_", className)
                 : `${className}.${methodName}`;
